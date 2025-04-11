@@ -13,3 +13,5 @@ To install the environement and it dependencies please follow the Steps:
             
     4. Done !
 
+To deactivate the environement :
+        `source bin/deactivate`
