@@ -3,7 +3,7 @@
 To install the environement and it dependencies please follow the Steps:
 
     1. Create a new environement by running :
-            `python3.12 -m venv .DL_env`
+            `python3.12.10 -m venv .DL_env`
 
     2. Activate the environement by running :
             `source .DL_env/bin/activate`
@@ -14,4 +14,4 @@ To install the environement and it dependencies please follow the Steps:
     4. Done !
 
 To deactivate the environement :
-        `source bin/deactivate`
+        `deactivate`
