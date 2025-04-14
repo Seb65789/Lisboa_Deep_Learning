@@ -1,29 +1,109 @@
-import torch
 import numpy as np
 import matplotlib.pyplot as plt
+import time
+import argparse
+from src.utils import load_dataset
 
 # Importing the classes
 #================================================================================================#
 
 from src.linearmodels import Perceptron
 
-
-# Load the dataset
 #================================================================================================#
-print("Loading dataset...")
-data = np.load("./Homework/Homework_1/src/intel_landscapes.npz")
 
-X_train = data['train_images']
-Y_train = data['train_labels']
 
-X_val = data['val_images']
-Y_val = data['val_labels']
+def main():
+    
+    # Command line Arguments 
+    #============================================================================================#
 
-X_test = data['test_images']
-Y_test = data['test_labels']
+    arguments = argparse.ArgumentParser() # Creating the arguments
 
-plt.imshow(X_train[0])
-plt.title(f"Label: {Y_train[0]}")
-plt.savefig("./Homework/Homework_1/test.png")
+    arguments.add_argument('model',choices=['perceptron','mlp','linear_regression']) # Model choice
 
-#================================================================================================#
+    arguments.add_argument('-epochs',default=20,type=int) # How many epochs
+
+    arguments.add_argument("-data_path",default="Homework/Homework_1/src/data/intel_landscapes.npz",type=str) # The data
+    
+    opt = arguments.parse_args()
+
+    #============================================================================================#
+
+    
+    # Load dataset
+    #============================================================================================#
+
+    data = load_dataset(opt.data_path,bias = opt.model=='mlp') # An object with : train , val , test keys
+    X_train, y_train = data["train"]
+    X_val, y_val = data["val"]
+    X_test, y_test = data["test"]
+
+    #============================================================================================#
+
+    
+
+
+    # Initialize the model
+    #============================================================================================#
+    
+    n_classes = len(np.unique(y_train))
+    n_features = X_train.shape[1] # number of columns
+    
+    model = Perceptron(n_classes,n_features)
+
+
+
+    # Tracking the metrics
+    #============================================================================================#
+
+    train_loss = []
+
+    train_acc = []
+    val_acc = []
+
+    #============================================================================================#
+
+    
+    # Training
+    #============================================================================================#
+
+    epochs = np.arange(1,opt.epochs+1)
+
+    print("Initial train accuracy : {:.4f} | initial validation accuracy : {:.4f}"
+          .format(model.evaluate(X_train,y_train),model.evaluate(X_val,y_val)))
+
+    start = time.time()
+
+    for epoch in epochs :
+        print("Training epoch {}".format(epoch))
+
+        # randomize the training order to generalize 
+        train_order = np.random.permutation(X_train.shape[0])
+        X_train = X_train[train_order]
+        y_train = y_train[train_order]
+
+        model.train_epoch(X_train,y_train) # Training
+
+        # Appending the metrics
+        train_acc.append(model.evaluate(X_train,y_train))
+        val_acc.append(model.evaluate(X_val,y_val))
+
+        # Printing 
+        print("Training accuracy : {:.4f} | Validation accuracy : {:.4f}"
+              .format(train_acc[-1],val_acc[-1]))
+    
+    end = time.time() - start
+    minutes = int(end//60)
+    seconds = int(end%60)
+
+    #============================================================================================#
+
+
+    # Testing
+    #============================================================================================#
+    print("Training took {}:{}".format(minutes,seconds))
+    print("Final test accuracy {:.4f}".format(model.evaluate(X_test,y_test)))
+    #============================================================================================#
+
+if __name__ == '__main__':
+    main()

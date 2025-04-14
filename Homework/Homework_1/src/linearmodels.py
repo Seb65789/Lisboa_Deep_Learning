@@ -9,7 +9,7 @@ class LinearModel(object) :
         raise NotImplementedError
     
     def train_epoch(self,X,y,**kwargs):
-        for x_i,y_i in X,y :
+        for x_i,y_i in zip(X,y) :
             self.update_weights(x_i,y_i,**kwargs)
     
     def predict(self,X):
