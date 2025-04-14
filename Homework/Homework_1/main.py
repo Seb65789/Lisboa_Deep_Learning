@@ -2,6 +2,11 @@ import torch
 import numpy as np
 import matplotlib.pyplot as plt
 
+# Importing the classes
+#================================================================================================#
+
+from src.linearmodels import Perceptron
+
 
 # Load the dataset
 #================================================================================================#
@@ -20,3 +25,5 @@ Y_test = data['test_labels']
 plt.imshow(X_train[0])
 plt.title(f"Label: {Y_train[0]}")
 plt.savefig("./Homework/Homework_1/test.png")
+
+#================================================================================================#
