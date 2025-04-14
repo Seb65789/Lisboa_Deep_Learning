@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import time
 import argparse
 from src.utils import load_dataset
-
+import os 
 # Importing the classes
 #================================================================================================#
 
@@ -101,9 +101,27 @@ def main():
 
     # Testing
     #============================================================================================#
+
     print("Training took {}:{}".format(minutes,seconds))
     print("Final test accuracy {:.4f}".format(model.evaluate(X_test,y_test)))
+    
     #============================================================================================#
+
+    if not(os.path.isdir("Homework/Homework_1/results/")) :
+          os.makedirs("Homework/Homework_1/results/")  
+          print("Results directory created")
+
+
+    # Plots
+    #============================================================================================#
+
+    plt.plot(epochs, train_acc,label = 'training accuracy')
+    plt.plot(epochs,val_acc,label='validation accuracy')
+    plt.title(f"{opt.model} Training and Validation accuracies")
+    plt.ylabel("Accuracy")
+    plt.xlabel("Epoch")
+    plt.legend()
+    plt.savefig("Homework/Homework_1/results/Train and validation accuracies - {}_{}".format(opt.model,opt.epochs))
 
 if __name__ == '__main__':
     main()
