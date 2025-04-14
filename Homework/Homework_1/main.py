@@ -3,11 +3,15 @@ import matplotlib.pyplot as plt
 import time
 import argparse
 from src.utils import load_dataset
+from src.plots import plot,plot_loss,plot_w_norm
 import os 
+
+
 # Importing the classes
 #================================================================================================#
 
 from src.linearmodels import Perceptron
+from src.linearmodels import LogisticRegressionScratch
 
 #================================================================================================#
 
@@ -19,12 +23,16 @@ def main():
 
     arguments = argparse.ArgumentParser() # Creating the arguments
 
-    arguments.add_argument('model',choices=['perceptron','mlp','linear_regression']) # Model choice
+    arguments.add_argument('model',choices=['perceptron','mlp_scratch','log_reg_scratch','log_reg_torch','mlp_torch']) # Model choice
 
     arguments.add_argument('-epochs',default=20,type=int) # How many epochs
 
-    arguments.add_argument("-data_path",default="Homework/Homework_1/src/data/intel_landscapes.npz",type=str) # The data
-    
+    arguments.add_argument("-data_path",default="src/data/intel_landscapes.npz",type=str) # The data
+
+    arguments.add_argument("-lr",default=0.001,type=float)
+
+    arguments.add_argument("-l2_penalty",default=0,type=float)
+
     opt = arguments.parse_args()
 
     #============================================================================================#
@@ -49,8 +57,12 @@ def main():
     n_classes = len(np.unique(y_train))
     n_features = X_train.shape[1] # number of columns
     
-    model = Perceptron(n_classes,n_features)
+    if opt.model == 'perceptron' :
+      model = Perceptron(n_classes,n_features)
 
+
+    elif opt.model == 'log_reg_scratch' :
+      model = LogisticRegressionScratch(n_classes,n_features)
 
 
     # Tracking the metrics
@@ -60,6 +72,8 @@ def main():
 
     train_acc = []
     val_acc = []
+
+    weight_norm = []
 
     #============================================================================================#
 
@@ -82,11 +96,17 @@ def main():
         X_train = X_train[train_order]
         y_train = y_train[train_order]
 
-        model.train_epoch(X_train,y_train) # Training
+        if opt.model != 'mlp' :
+            model.train_epoch(X_train
+                              ,y_train
+                              ,lr=opt.lr
+                              ,l2_penalty = opt.l2_penalty) 
 
         # Appending the metrics
         train_acc.append(model.evaluate(X_train,y_train))
         val_acc.append(model.evaluate(X_val,y_val))
+
+        weight_norm.append(np.linalg.norm(model.W))
 
         # Printing 
         print("Training accuracy : {:.4f} | Validation accuracy : {:.4f}"
@@ -102,26 +122,33 @@ def main():
     # Testing
     #============================================================================================#
 
+    with open(f"results/{opt.model}-results.txt","a") as f:
+       if opt.model == 'perceptron':
+          f.write("\nTraining took {}:{} - Final test accuracy {:.4f} " \
+          "\n Parameters : \n\t epochs :{}".format(minutes,seconds,model.evaluate(X_test,y_test),opt.epochs))
+       elif opt.model == 'log_reg_scratch' or opt.model == 'log_reg_torch':
+          f.write("\nTraining took {}:{} - Final test accuracy {:.4f} - Weight's norm : {}" \
+          "\n Parameters : \n\t -epochs :{} \n\t -learning_rate : {} \n\t -regularization : {}".format(minutes,seconds,model.evaluate(X_test,y_test),weight_norm[-1],opt.epochs,opt.lr,opt.l2_penalty))
     print("Training took {}:{}".format(minutes,seconds))
     print("Final test accuracy {:.4f}".format(model.evaluate(X_test,y_test)))
     
     #============================================================================================#
 
-    if not(os.path.isdir("Homework/Homework_1/results/")) :
-          os.makedirs("Homework/Homework_1/results/")  
-          print("Results directory created")
+    if not(os.path.isdir("results/")) :
+      os.makedirs("results/")  
+      print("Results directory created")
 
 
     # Plots
     #============================================================================================#
 
-    plt.plot(epochs, train_acc,label = 'training accuracy')
-    plt.plot(epochs,val_acc,label='validation accuracy')
-    plt.title(f"{opt.model} Training and Validation accuracies")
-    plt.ylabel("Accuracy")
-    plt.xlabel("Epoch")
-    plt.legend()
-    plt.savefig("Homework/Homework_1/results/Train and validation accuracies - {}_{}".format(opt.model,opt.epochs))
+    plot(epochs,train_acc,val_acc,filename=f"results/{opt.model} - accs.pdf")
+    if opt.model == 'mlp' :
+      plot_loss()
+    elif opt.model == 'log_reg_scratch' or opt.model == 'log_reg_torch' :
+      plot_w_norm(epochs,weight_norm,filename=f"results/{opt.model} - w_norms.pdf")
+
+        
 
 if __name__ == '__main__':
     main()

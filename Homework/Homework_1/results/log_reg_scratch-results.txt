@@ -1,0 +1,21 @@
+
+Training took 1:45 - Final test accuracy 0.4400 - Weight's norm : 4.155240510483984
+ Parameters : 
+	 -epochs :100 
+	 -learning_rate : 0.001 
+	 -regularization : 0.01
+Training took 1:44 - Final test accuracy 0.4577 - Weight's norm : 4.147826379196409
+ Parameters : 
+	 -epochs :100 
+	 -learning_rate : 0.001 
+	 -regularization : 0.01
+Training took 1:44 - Final test accuracy 0.4480 - Weight's norm : 1.3316580619142677
+ Parameters : 
+	 -epochs :100 
+	 -learning_rate : 0.001 
+	 -regularization : 0.1
+Training took 1:41 - Final test accuracy 0.4693 - Weight's norm : 22.726495322408805
+ Parameters : 
+	 -epochs :100 
+	 -learning_rate : 0.001 
+	 -regularization : 0
