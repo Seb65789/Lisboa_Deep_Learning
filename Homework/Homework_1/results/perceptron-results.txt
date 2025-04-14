@@ -1,0 +1,10 @@
+
+Training took 0:28 - Final test accuracy 0.3590 
+ Parameters : 
+	 epochs :100
+Training took 0:28 - Final test accuracy 0.3517 
+ Parameters : 
+	 epochs :100
+Training took 2:25 - Final test accuracy 0.3630 
+ Parameters : 
+	 epochs :500

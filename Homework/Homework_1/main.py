@@ -64,6 +64,8 @@ def main():
     elif opt.model == 'log_reg_scratch' :
       model = LogisticRegressionScratch(n_classes,n_features)
 
+    #============================================================================================#
+
 
     # Tracking the metrics
     #============================================================================================#
@@ -101,6 +103,10 @@ def main():
                               ,y_train
                               ,lr=opt.lr
                               ,l2_penalty = opt.l2_penalty) 
+        else :
+           loss = model.train_epoch(X_train,
+                             y_train,
+                             lr = opt.lr)
 
         # Appending the metrics
         train_acc.append(model.evaluate(X_train,y_train))
