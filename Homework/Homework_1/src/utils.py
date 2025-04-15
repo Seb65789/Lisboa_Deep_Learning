@@ -19,6 +19,7 @@ def load_dataset(data_path, bias=False):
 
     # Flatten images and normalize to get a grey image
     train_X = data["train_images"].reshape([data["train_images"].shape[0], -1])/256
+    #print(train_X.shape)
     val_X = data["val_images"].reshape([data["val_images"].shape[0], -1])/256
     test_X = data["test_images"].reshape([data["test_images"].shape[0], -1])/256
    

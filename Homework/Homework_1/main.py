@@ -10,8 +10,9 @@ import os
 # Importing the classes
 #================================================================================================#
 
-from src.linearmodels import Perceptron
-from src.linearmodels import LogisticRegressionScratch
+from Homework.Homework_1.src.linearmodels_scratch import Perceptron
+from Homework.Homework_1.src.linearmodels_scratch import LogisticRegressionScratch
+from Homework.Homework_1.src.mlp_scratch import MultiLayerPerceptronScratch
 
 #================================================================================================#
 
@@ -23,7 +24,7 @@ def main():
 
     arguments = argparse.ArgumentParser() # Creating the arguments
 
-    arguments.add_argument('model',choices=['perceptron','mlp_scratch','log_reg_scratch','log_reg_torch','mlp_torch']) # Model choice
+    arguments.add_argument('model',choices=['perceptron','mlp_scratch','log_reg_scratch','log_reg_torch','mlp_torch','mlp_scratch']) # Model choice
 
     arguments.add_argument('-epochs',default=20,type=int) # How many epochs
 
@@ -32,6 +33,8 @@ def main():
     arguments.add_argument("-lr",default=0.001,type=float)
 
     arguments.add_argument("-l2_penalty",default=0,type=float)
+
+    arguments.add_argument("-hidden_size",default=100,type=int)
 
     opt = arguments.parse_args()
 
@@ -64,6 +67,9 @@ def main():
     elif opt.model == 'log_reg_scratch' :
       model = LogisticRegressionScratch(n_classes,n_features)
 
+    elif opt.model == 'mlp_scratch':
+      model = MultiLayerPerceptronScratch(n_classes,n_features,opt.hidden_size)
+
     #============================================================================================#
 
 
@@ -90,6 +96,8 @@ def main():
 
     start = time.time()
 
+    #print(X_train.shape)
+
     for epoch in epochs :
         print("Training epoch {}".format(epoch))
 
@@ -98,7 +106,7 @@ def main():
         X_train = X_train[train_order]
         y_train = y_train[train_order]
 
-        if opt.model != 'mlp' :
+        if opt.model != 'mlp_scratch' and opt.model != 'mlp_torch' :
             model.train_epoch(X_train
                               ,y_train
                               ,lr=opt.lr
@@ -111,8 +119,9 @@ def main():
         # Appending the metrics
         train_acc.append(model.evaluate(X_train,y_train))
         val_acc.append(model.evaluate(X_val,y_val))
-
-        weight_norm.append(np.linalg.norm(model.W))
+        train_loss.append(loss)
+        if opt.model == 'log_reg_scratch' or opt.model == 'log_reg_torch':
+          weight_norm.append(np.linalg.norm(model.W))
 
         # Printing 
         print("Training accuracy : {:.4f} | Validation accuracy : {:.4f}"
@@ -129,12 +138,17 @@ def main():
     #============================================================================================#
 
     with open(f"results/{opt.model}-results.txt","a") as f:
-       if opt.model == 'perceptron':
+      if opt.model == 'perceptron':
           f.write("\nTraining took {}:{} - Final test accuracy {:.4f} " \
           "\n Parameters : \n\t epochs :{}".format(minutes,seconds,model.evaluate(X_test,y_test),opt.epochs))
-       elif opt.model == 'log_reg_scratch' or opt.model == 'log_reg_torch':
+      elif opt.model == 'log_reg_scratch' or opt.model == 'log_reg_torch':
           f.write("\nTraining took {}:{} - Final test accuracy {:.4f} - Weight's norm : {}" \
           "\n Parameters : \n\t -epochs :{} \n\t -learning_rate : {} \n\t -regularization : {}".format(minutes,seconds,model.evaluate(X_test,y_test),weight_norm[-1],opt.epochs,opt.lr,opt.l2_penalty))
+      elif opt.model == 'mlp_scratch' or opt.model == 'mlp_torch':
+         f.write("\nTraining took {}:{} - Final test accuracy {:.4f}" \
+          "\n Parameters : \n\t -epochs :{} \n\t -learning_rate : {}".format(minutes,seconds,model.evaluate(X_test,y_test),opt.epochs,opt.lr))
+      
+         
     print("Training took {}:{}".format(minutes,seconds))
     print("Final test accuracy {:.4f}".format(model.evaluate(X_test,y_test)))
     
