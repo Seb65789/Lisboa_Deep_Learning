@@ -5,19 +5,27 @@ import argparse
 from src.utils import load_dataset
 from src.plots import plot,plot_loss,plot_w_norm
 import os 
+import torch as nn
 
 
 # Importing the classes
 #================================================================================================#
 
-from Homework.Homework_1.src.linearmodels_scratch import Perceptron
-from Homework.Homework_1.src.linearmodels_scratch import LogisticRegressionScratch
-from Homework.Homework_1.src.mlp_scratch import MultiLayerPerceptronScratch
+from src.linearmodels_scratch import Perceptron
+from src.linearmodels_scratch import LogisticRegressionScratch
+from src.mlp_scratch import MultiLayerPerceptronScratch
 
 #================================================================================================#
 
 
 def main():
+    
+    # On GPU
+    device = nn.device("cuda" if nn.cuda.is_available() else 'cpu')
+
+
+
+    print("Running now on ", nn.cuda.get_device_name(0))
     
     # Command line Arguments 
     #============================================================================================#
@@ -28,7 +36,7 @@ def main():
 
     arguments.add_argument('-epochs',default=20,type=int) # How many epochs
 
-    arguments.add_argument("-data_path",default="src/data/intel_landscapes.npz",type=str) # The data
+    arguments.add_argument("-data_path",default="./src/data/intel_landscapes.npz",type=str) # The data
 
     arguments.add_argument("-lr",default=0.001,type=float)
 
