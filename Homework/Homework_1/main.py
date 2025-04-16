@@ -18,6 +18,7 @@ from torch.utils.data import DataLoader
 from src.linearmodels_scratch import Perceptron
 from src.linearmodels_scratch import LogisticRegressionScratch
 from src.mlp_scratch import MultiLayerPerceptronScratch
+from src.linearmodels_torch import LinearModel
 
 #================================================================================================#
 
@@ -46,6 +47,14 @@ def main():
     arguments.add_argument("-l2_penalty",default=0,type=float)
 
     arguments.add_argument("-hidden_size",default=100,type=int)
+
+    arguments.add_argument("-optimizer",choices=['sgd','adam'],type=str)
+
+    arguments.add_argument("-activation",choices=['tanh','relu'],type=str)
+    arguments.add_argument("-momentum",default=0,type=float)
+    arguments.add_argument("-dropout",default=0,type=float)
+    arguments.add_argument("-layers",default=2,type=int)
+    arguments.add_argument("-batch_size",default=64,type=int)
 
     opt = arguments.parse_args()
 
@@ -98,6 +107,13 @@ def main():
 
     elif opt.model == 'mlp_scratch':
       model = MultiLayerPerceptronScratch(n_classes,n_features,opt.hidden_size)
+
+    elif opt.model == 'mlp_torch':
+       raise NotImplementedError
+    
+    elif opt.model == 'log_reg_torch':
+       model = LinearModel(n_classes=n_classes,n_features=n_feats)
+
 
     #============================================================================================#
 
