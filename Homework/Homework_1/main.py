@@ -5,7 +5,8 @@ import argparse
 from src.utils import load_dataset
 from src.plots import plot,plot_loss,plot_w_norm
 import os 
-import torch as nn
+import torch
+from torch import nn
 
 
 # Importing the classes
@@ -21,9 +22,8 @@ from src.mlp_scratch import MultiLayerPerceptronScratch
 def main():
     
     # On GPU
+
     device = nn.device("cuda" if nn.cuda.is_available() else 'cpu')
-
-
 
     print("Running now on ", nn.cuda.get_device_name(0))
     
