@@ -2,11 +2,14 @@ import numpy as np
 import matplotlib.pyplot as plt
 import time
 import argparse
-from src.utils import load_dataset
+from src.utils import load_dataset,configure_seed,ClassificationDataset
 from src.plots import plot,plot_loss,plot_w_norm
 import os 
 import torch
 from torch import nn
+from src.models_torch import evaluate,predict,train_batch
+from torch.utils.data import DataLoader
+
 
 
 # Importing the classes
@@ -52,10 +55,28 @@ def main():
     # Load dataset
     #============================================================================================#
 
-    data = load_dataset(opt.data_path,bias = opt.model=='mlp') # An object with : train , val , test keys
+    configure_seed(seed=42)
+
+
+    data = load_dataset(opt.data_path,bias = opt.model=='mlp_scratch') # An object with : train , val , test keys
     X_train, y_train = data["train"]
     X_val, y_val = data["val"]
     X_test, y_test = data["test"]
+
+    if opt.model == 'mlp_torch' or opt.model == 'log_reg_torch' :
+
+      data = load_dataset(opt.data_path)
+      dataset = ClassificationDataset(data)
+      train_dataloader = DataLoader(
+          dataset, batch_size=opt.batch_size, shuffle=True, generator=torch.Generator().manual_seed(42))
+      dev_X, dev_y = dataset.dev_X, dataset.dev_y
+      test_X, test_y = dataset.test_X, dataset.test_y
+
+      n_classes = torch.unique(dataset.y).shape[0]  # 10
+      n_feats = dataset.X.shape[1]
+
+      print(f"N features: {n_feats}")
+      print(f"N classes: {n_classes}")
 
     #============================================================================================#
 

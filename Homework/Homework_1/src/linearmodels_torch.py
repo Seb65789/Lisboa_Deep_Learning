@@ -1,11 +1,9 @@
 import numpy as np
 import torch 
+from torch.nn import Module
 from torch import nn
 
-
-from models_torch import Model
-
-class LinearModel(Model) :
+class LinearModel(Module) :
     def __init__(self,n_classes,n_features,**kwargs) :
         # Initialize based on Model
         super().__init__()
