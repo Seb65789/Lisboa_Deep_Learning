@@ -1,0 +1,116 @@
+
+Training took 0:19 - Final test accuracy 0.4673
+ Parameters : 
+	 -epochs :100 
+	 -learning_rate : 1e-05 
+	 -regularization : 0.01
+Training took 0:20 - Final test accuracy 0.4673
+ Parameters : 
+	 -epochs :100 
+	 -learning_rate : 1e-05 
+	 -regularization : 0.01
+Training took 0:19 - Final test accuracy 0.4673
+ Parameters : 
+	 -epochs : 100 
+	 -learning_rate : 1e-05 
+	 -regularization : 0.01 
+	 -Optimizer : sgd 
+	 -batch_size : 32
+Training took 0:20 - Final test accuracy 0.4673
+ Parameters : 
+	 -epochs : 100 
+	 -learning_rate : 1e-05 
+	 -regularization : 0.01 
+	 -Optimizer : sgd 
+	 -batch_size : 32
+Training took 0:19 - Final test accuracy 0.4673
+ Parameters : 
+	 -epochs : 100 
+	 -learning_rate : 1e-05 
+	 -regularization : 0.01 
+	 -Optimizer : sgd 
+	 -batch_size : 32
+Training took 0:19 - Final test accuracy 0.4673
+ Parameters : 
+	 -epochs : 100 
+	 -learning_rate : 1e-05 
+	 -regularization : 0.01 
+	 -Optimizer : sgd 
+	 -batch_size : 32
+Training took 0:19 - Final test accuracy 0.4673
+ Parameters : 
+	 -epochs : 100 
+	 -learning_rate : 1e-05 
+	 -regularization : 0.01 
+	 -Optimizer : sgd 
+	 -batch_size : 32
+Training took 0:19 - Final test accuracy 0.4673
+ Parameters : 
+	 -epochs : 100 
+	 -learning_rate : 1e-05 
+	 -regularization : 0.01 
+	 -Optimizer : sgd 
+	 -batch_size : 32
+Training took 0:19 - Final test accuracy 0.4673
+ Parameters : 
+	 -epochs : 100 
+	 -learning_rate : 1e-05 
+	 -regularization : 0.01 
+	 -Optimizer : sgd 
+	 -batch_size : 32
+Training took 0:19 - Final test accuracy 0.4673
+ Parameters : 
+	 -epochs : 100 
+	 -learning_rate : 1e-05 
+	 -regularization : 0.01 
+	 -Optimizer : sgd 
+	 -batch_size : 32
+Training took 0:19 - Final test accuracy 0.4673
+ Parameters : 
+	 -epochs : 100 
+	 -learning_rate : 1e-05 
+	 -regularization : 0.01 
+	 -Optimizer : sgd 
+	 -batch_size : 32
+Training took 0:19 - Final test accuracy 0.4673
+ Parameters : 
+	 -epochs : 100 
+	 -learning_rate : 1e-05 
+	 -regularization : 0.01 
+	 -Optimizer : sgd 
+	 -batch_size : 32
+Training took 0:19 - Final test accuracy 0.4673
+ Parameters : 
+	 -epochs : 100 
+	 -learning_rate : 1e-05 
+	 -regularization : 0.01 
+	 -Optimizer : sgd 
+	 -batch_size : 32
+Training took 0:19 - Final test accuracy 0.5237
+ Parameters : 
+	 -epochs : 100 
+	 -learning_rate : 0.001 
+	 -regularization : 0.01 
+	 -Optimizer : sgd 
+	 -batch_size : 32
+Training took 0:42 - Final test accuracy 0.5343
+ Parameters : 
+	 -epochs : 300 
+	 -learning_rate : 0.001 
+	 -regularization : 0.01 
+	 -Optimizer : sgd 
+	 -batch_size : 64
+Training took 2:21 - Final test accuracy 0.5297
+ Parameters : 
+	 -epochs : 1000 
+	 -learning_rate : 0.001 
+	 -regularization : 0.01 
+	 -Optimizer : sgd 
+	 -batch_size : 64
+Training took 0:44 - Final test accuracy 0.5343
+ Parameters : 
+	 -epochs : 300 
+	 -learning_rate : 0.001 
+	 -regularization : 0.01 
+	 -Optimizer : sgd 
+	 -batch_size : 64

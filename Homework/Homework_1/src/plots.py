@@ -35,10 +35,10 @@ def plot_w_norm(epochs, w_norms, filename=None):
 def plot_torch(epochs,plottables,filename=None,ylim=None):
     plt.clf()
     plt.xlabel('Epoch')
-    for label,plottable in plottables.item():
-        plt.plt(epochs,plottable,label=label)
+    for label,plottable in plottables.items():
+        plt.plot(epochs,plottable,label=label)
     plt.legend()
     if ylim :
         plt.ylim(ylim)
     if filename:
-        plt.savefig(filename,bbox_inches='tigh')
+        plt.savefig(filename)
