@@ -19,6 +19,7 @@ from src.linearmodels_scratch import Perceptron
 from src.linearmodels_scratch import LogisticRegressionScratch
 from src.mlp_scratch import MultiLayerPerceptronScratch
 from src.linearmodels_torch import LinearModel
+from src.mlp_torch import MLP
 
 #================================================================================================#
 
@@ -46,11 +47,11 @@ def main():
 
     arguments.add_argument("-l2_penalty",default=0,type=float)
 
-    arguments.add_argument("-hidden_size",default=100,type=int)
+    arguments.add_argument("-hidden_size",default=100)
 
     arguments.add_argument("-optimizer",choices=['sgd','adam'],type=str)
 
-    arguments.add_argument("-activation",choices=['tanh','relu'],type=str)
+    arguments.add_argument("-activation",choices=['tanh','relu'],type=str,default='relu')
 
     arguments.add_argument("-momentum",default=0,type=float)
     
@@ -97,7 +98,7 @@ def main():
     # Initialize the model
     #============================================================================================#
       if opt.model == 'mlp_torch':
-        raise NotImplementedError
+        model = MLP(n_classes,n_feats,opt.hidden_size,opt.layers,opt.activation,opt.dropout)
     
       else:
         model = LinearModel(n_classes=n_classes,n_features=n_feats)

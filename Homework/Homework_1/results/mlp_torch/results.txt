@@ -1,0 +1,31 @@
+
+Training took 1:19 - Final test accuracy 0.6037
+ Parameters : 
+	 - hidden_size : 100 
+	 -layers : 2
+	 -epochs :300 
+	 -learning_rate : 0.001 
+	 -regularization : 0 
+	 -Optimizer : sgd 
+	 -batch_size : 64 
+	 -dropout : 0
+Training took 1:24 - Final test accuracy 0.6037
+ Parameters : 
+	 - hidden_size : 200 
+	 -layers : 2
+	 -epochs :200 
+	 -learning_rate : 0.002 
+	 -regularization : 0 
+	 -Optimizer : sgd 
+	 -batch_size : 64 
+	 -dropout : 0.3
+Training took 9:6 - Final test accuracy 0.5723
+ Parameters : 
+	 - hidden_size : [200,500,1000,500,200] 
+	 -layers : 2
+	 -epochs :1000 
+	 -learning_rate : 0.005 
+	 -regularization : 0 
+	 -Optimizer : sgd 
+	 -batch_size : 512 
+	 -dropout : 0.3
