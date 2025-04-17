@@ -27,8 +27,9 @@ class MLP(nn.Module):
             out_sizes = ast.literal_eval(hidden_size) + [n_classes]
 
 
-        layers = [layers.append(nn.Linear(in_size,out_size)),layers.append(activation),layers.append(drop_layer)
-                  for in_size, out_size in zip(in_sizes[:-1],out_sizes[:-1])]
+        layers = [layer 
+                  for in_size, out_size in zip(in_sizes[:-1],out_sizes[:-1]) 
+                  for layer in (nn.Linear(in_size,out_size), activation, drop_layer)]
     
         layers.append(nn.Linear(in_sizes[-1],out_sizes[-1]))
         self.feedforward = nn.Sequential(*layers) # *to unpack the list
